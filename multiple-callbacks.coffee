@@ -13,10 +13,11 @@ _.each ['created', 'rendered', 'destroyed'], (callback_name) ->
   _bootstrap_callbacks.push ->
     _.each Template, (template, template_name)->
       if template.kind == 'Template_' + template_name
+        _previous_callback = Template[template_name][callback_name]
         Template[template_name][callback_name] = ->
           self = @
-          _.each _.union(Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), (func)->
-            func && func.bind(self)()
+          _.each _.union([_previous_callback], Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), (func)->
+            _.isFunction(func) && func.bind(self)()
 
 Meteor.startup ->
   _.each _bootstrap_callbacks, (bootstrap_code) ->

@@ -26,12 +26,14 @@
     };
     return _bootstrap_callbacks.push(function() {
       return _.each(Template, function(template, template_name) {
+        var _previous_callback;
         if (template.kind === 'Template_' + template_name) {
+          _previous_callback = Template[template_name][callback_name];
           return Template[template_name][callback_name] = function() {
             var self;
             self = this;
-            return _.each(_.union(Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), function(func) {
-              return func && func.bind(self)();
+            return _.each(_.union([_previous_callback], Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), function(func) {
+              return _.isFunction(func) && func.bind(self)();
             });
           };
         }
