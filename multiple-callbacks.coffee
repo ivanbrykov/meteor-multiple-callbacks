@@ -12,7 +12,7 @@ _.each ['created', 'rendered', 'destroyed'], (callback_name) ->
 
   _bootstrap_callbacks.push ->
     _.each Template, (template, template_name)->
-      if template.kind == 'Template_' + template_name
+      if template.__templateName == template_name
         _previous_callback = Template[template_name][callback_name]
         Template[template_name][callback_name] = ->
           self = @

@@ -27,7 +27,7 @@
     return _bootstrap_callbacks.push(function() {
       return _.each(Template, function(template, template_name) {
         var _previous_callback;
-        if (template.kind === 'Template_' + template_name) {
+        if (template.__templateName === template_name) {
           _previous_callback = Template[template_name][callback_name];
           return Template[template_name][callback_name] = function() {
             var self;

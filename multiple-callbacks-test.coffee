@@ -1,8 +1,14 @@
-#Template = Package.templating.Template
+
+materialize = (content, parent) ->
+  func = content;
+  if typeof content != 'function'
+    func = ->
+      return content
+  Blaze.render(func).attach(parent);
 
 render = (comp) ->
   div = document.createElement("div")
-  UI.materialize(comp, div)
+  materialize(comp, div)
   document.body.appendChild(div)
 
 Tinytest.addAsync 'attaching created callback', (test, cb) ->
@@ -40,7 +46,7 @@ Tinytest.addAsync 'attaching destroyed callback', (test, cb) ->
     test.ok()
     cb()
   Template.rendered 'testBasicDestroyed', ->
-    @__component__.dom.remove()
+    @__view__.domrange.destroy()
   render(Template['testBasicDestroyed'])
 
 

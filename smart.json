@@ -3,7 +3,7 @@
   "description": "Multiple template callbacks implementation for Meteor",
   "homepage": "https://github.com/brykov/meteor-multiple-callbacks",
   "author": "Ivan Brykov (https://github.com/brykov)",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "git": "https://github.com/brykov/meteor-multiple-callbacks.git",
   "packages": {}
 }
