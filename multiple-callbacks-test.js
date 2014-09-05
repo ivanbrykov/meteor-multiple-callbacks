@@ -10,7 +10,7 @@
         return content;
       };
     }
-    return Blaze.render(func).attach(parent);
+    return Blaze.render(func, parent);
   };
 
   render = function(comp) {
@@ -68,7 +68,7 @@
       return cb();
     });
     Template.rendered('testBasicDestroyed', function() {
-      return this.__view__.domrange.destroy();
+      return this.view._domrange.destroy();
     });
     return render(Template['testBasicDestroyed']);
   });

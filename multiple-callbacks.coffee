@@ -11,13 +11,16 @@ _.each ['created', 'rendered', 'destroyed'], (callback_name) ->
       Template._multiple_callbacks[callback_name][template_name].push callback
 
   _bootstrap_callbacks.push ->
-    _.each Template, (template, template_name)->
-      if template.__templateName == template_name
-        _previous_callback = Template[template_name][callback_name]
-        Template[template_name][callback_name] = ->
-          self = @
-          _.each _.union([_previous_callback], Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), (func)->
-            _.isFunction(func) && func.bind(self)()
+    for template_name of Template
+      template = Template[template_name]
+      ((template_name, template ) ->
+        if template instanceof Blaze.Template
+          _previous_callback = Template[template_name][callback_name]
+          Template[template_name][callback_name] = ->
+            self = @
+            _.each _.union([_previous_callback], Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), (func)->
+              _.isFunction(func) && func.bind(self)()
+      )(template_name, template)
 
 Meteor.startup ->
   _.each _bootstrap_callbacks, (bootstrap_code) ->

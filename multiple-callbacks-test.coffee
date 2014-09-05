@@ -4,7 +4,7 @@ materialize = (content, parent) ->
   if typeof content != 'function'
     func = ->
       return content
-  Blaze.render(func).attach(parent);
+  Blaze.render(func, parent);
 
 render = (comp) ->
   div = document.createElement("div")
@@ -46,7 +46,7 @@ Tinytest.addAsync 'attaching destroyed callback', (test, cb) ->
     test.ok()
     cb()
   Template.rendered 'testBasicDestroyed', ->
-    @__view__.domrange.destroy()
+    @view._domrange.destroy()
   render(Template['testBasicDestroyed'])
 
 

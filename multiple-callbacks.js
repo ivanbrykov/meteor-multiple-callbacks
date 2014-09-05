@@ -25,19 +25,25 @@
       })(this));
     };
     return _bootstrap_callbacks.push(function() {
-      return _.each(Template, function(template, template_name) {
-        var _previous_callback;
-        if (template.__templateName === template_name) {
-          _previous_callback = Template[template_name][callback_name];
-          return Template[template_name][callback_name] = function() {
-            var self;
-            self = this;
-            return _.each(_.union([_previous_callback], Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), function(func) {
-              return _.isFunction(func) && func.bind(self)();
-            });
-          };
-        }
-      });
+      var template, template_name, _results;
+      _results = [];
+      for (template_name in Template) {
+        template = Template[template_name];
+        _results.push((function(template_name, template) {
+          var _previous_callback;
+          if (template instanceof Blaze.Template) {
+            _previous_callback = Template[template_name][callback_name];
+            return Template[template_name][callback_name] = function() {
+              var self;
+              self = this;
+              return _.each(_.union([_previous_callback], Template._multiple_callbacks[callback_name][template_name], Template._multiple_callbacks[callback_name][null]), function(func) {
+                return _.isFunction(func) && func.bind(self)();
+              });
+            };
+          }
+        })(template_name, template));
+      }
+      return _results;
     });
   });
 
