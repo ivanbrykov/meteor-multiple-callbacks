@@ -6,10 +6,10 @@ The main purpose of this package is providing support of multiple ```created/ren
 
 ## Usage
 
-Add the package to your app using <a href="https://atmospherejs.com/package/multiple-callbacks">meteorite</a>:
+Add the package to your app:
 
 ```
-mrt add multiple-callbacks
+meteor add xorax:multiple-callbacks
 ```
 
 Add callbacks to your templates using the following API:
